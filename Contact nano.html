@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(15, 15, 15, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+      overflow: hidden;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 25px;
+      text-align: center;
+      border-bottom: 2px solid #fff;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 12px #fff;
+    }
+
+    .subtitle {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .email-form {
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #fff;
+      font-size: 16px;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      background: #111;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #fff;
+      box-shadow: 0 0 15px #fff;
+    }
+
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+    }
+
+    .btn {
+      width: 100%;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+
+    .btn i {
+      margin-right: 10px;
+    }
+
+    .btn:hover {
+      background: #000;
+      color: #fff;
+      box-shadow: 0 0 25px #fff;
+    }
+
+    footer {
+      background: #111;
+      padding: 15px;
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      border-top: 1px solid #fff;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #fff;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    .status-indicator .dot {
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .response-panel {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 18px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border: 2px solid #fff;
+      display: none;
+    }
+
+    .response-panel h3 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 18px;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    .response-panel p {
+      color: #ddd;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .response-success {
+      border-color: #0f0;
+    }
+
+    .response-success h3 {
+      color: #0f0;
+      text-shadow: 0 0 8px #0f0;
+    }
+
+    .response-error {
+      border-color: #f33;
+    }
+
+    .response-error h3 {
+      color: #f33;
+      text-shadow: 0 0 8px #f33;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-paper-plane"></i> Contact nano</h1>
+      <p class="subtitle">Send emails </p>
+    </header>
+    
+    <div class="email-form">
+      <div class="form-group">
+        <label for="to"><i class="fas fa-user"></i> your Email</label>
+        <input type="email" id="to" placeholder="Enter recipient's email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="message"><i class="fas fa-envelope"></i> Message</label>
+        <textarea id="message" placeholder="Write your message here..." required></textarea>
+      </div>
+      
+      <button class="btn" id="sendBtn">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+      
+      <div class="response-panel" id="responsePanel">
+        <h3><i class="fas fa-check-circle"></i> 100% worked! your Message was sent</h3>
+        <p>Your message has been sent successfully.</p>
+      </div>
+    </div>
+    
+    <footer>
+      <p>This project powered by EmailJS</p>
+      <div class="status-indicator">
+        <div class="dot"></div>
+        <span>Secure connection active</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize EmailJS
+      emailjs.init("53r22IZqcQ-0GB9gT"); // Replace with your EmailJS public key
+      
+      const sendBtn = document.getElementById('sendBtn');
+      const messageTextarea = document.getElementById('message');
+      const responsePanel = document.getElementById('responsePanel');
+      
+      function showResponse(message, type) {
+        responsePanel.querySelector('p').textContent = message;
+        responsePanel.style.display = 'block';
+        
+        if (type === 'success') {
+          responsePanel.className = 'response-panel response-success';
+          responsePanel.querySelector('h3').innerHTML = '<i class="fas fa-check-circle"></i> Success';
+        } else {
+          responsePanel.className = 'response-panel response-error';
+          responsePanel.querySelector('h3').innerHTML = '<i class="fas fa-exclamation-circle"></i> Error';
+        }
+        
+        setTimeout(() => {
+          responsePanel.style.display = 'none';
+        }, 5000);
+      }
+      
+      sendBtn.addEventListener('click', function() {
+        const to = document.getElementById('to').value;
+        const message = messageTextarea.value;
+        
+        if (!to || !message) {
+          showResponse('Please fill in all fields.', 'error');
+          return;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(to)) {
+          showResponse('Please enter a valid email address.', 'error');
+          return;
+        }
+        
+        const originalText = sendBtn.innerHTML;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        sendBtn.disabled = true;
+        
+        const templateParams = {
+          to_email: to,
+          message: message,
+          from_name: "SecureMail User",
+          reply_to: "user@example.com"
+        };
+        
+        emailjs.send('service_ejygvk6', 'template_rd7ztzo', templateParams)
+          .then(function(response) {
+            showResponse('Email sent successfully!', 'success');
+            sendBtn.innerHTML = originalText;
+            sendBtn.disabled = false;
+            
+            document.getElementById('to').value = '';
+            messageTextarea.value = '';
+          }, function(error) {
+            showResponse('Failed to send email. Please try again.', 'error');
+            sendBtn.innerHTML = originalText;
+            sendBtn.disabled = false;
+          });
+      });
+    });
+  </script>
+</body>
+</html>

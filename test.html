@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Straight Line Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: #e0e0e0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .animation-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, #4ecdc4, #ffe66d, #45b7d1, transparent);
+            transform: translateY(-50%);
+        }
+        
+        .line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            animation: moveLine 2.5s linear infinite;
+        }
+        
+        @keyframes moveLine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 2.5rem;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .info-box h3 {
+            margin-bottom: 15px;
+            color: #ffe66d;
+        }
+        
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .animation-container {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Infinite Line Animation</h1>
+        <p>A single straight line that moves across the screen infinitely with a gradient effect</p>
+        
+        <div class="animation-container">
+            <div class="line"></div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="toggleAnimation()">Pause/Play Animation</button>
+            <button onclick="changeDirection()">Change Direction</button>
+            <button onclick="changeSpeed('faster')">Speed Up</button>
+            <button onclick="changeSpeed('slower')">Slow Down</button>
+        </div>
+        
+        <div class="info-box">
+            <h3>How It Works</h3>
+            <p>This animation uses CSS keyframes to move a gradient line across the screen. The line is created with a linear gradient background and animated using the transform property. The animation is set to run infinitely with a linear timing function for consistent speed.</p>
+        </div>
+    </div>
+
+    <script>
+        let animationDirection = 'normal';
+        let animationSpeed = 2.5;
+        
+        function toggleAnimation() {
+            const line = document.querySelector('.line::before');
+            const lineElement = document.querySelector('.line');
+            
+            const currentAnimation = getComputedStyle(lineElement, '::before').animationPlayState;
+            
+            if (currentAnimation === 'paused') {
+                lineElement.style.animationPlayState = 'running';
+                // For pseudo-element, we need to set it on the parent with a custom property
+                document.documentElement.style.setProperty('--anim-state', 'running');
+            } else {
+                lineElement.style.animationPlayState = 'paused';
+                document.documentElement.style.setProperty('--anim-state', 'paused');
+            }
+        }
+        
+        function changeDirection() {
+            const lineElement = document.querySelector('.line');
+            
+            if (animationDirection === 'normal') {
+                animationDirection = 'reverse';
+            } else {
+                animationDirection = 'normal';
+            }
+            
+            lineElement.style.animationDirection = animationDirection;
+        }
+        
+        function changeSpeed(speed) {
+            const lineElement = document.querySelector('.line');
+            
+            if (speed === 'faster') {
+                animationSpeed = Math.max(0.5, animationSpeed - 0.5);
+            } else if (speed === 'slower') {
+                animationSpeed += 0.5;
+            }
+            
+            lineElement.style.animationDuration = `${animationSpeed}s`;
+        }
+    </script>
+</body>
+</html>

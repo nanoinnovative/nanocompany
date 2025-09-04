@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Nano | WhatsApp Yahia Ben Amor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background: linear-gradient(135deg, #0d0d0d 0%, #151515 50%, #1c1c1c 100%);
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .glass-bg {
+            width: 100%;
+            min-height: 100vh;
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-dot {
+            color: #aaa;
+        }
+
+        .top ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .top ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 8px 0;
+        }
+
+        .top ul li a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #e8e7eb, #171818);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .top ul li a:hover {
+            color: #444445;
+        }
+
+        .top ul li a:hover::after {
+            width: 100%;
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: white;
+            border: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, rgb(134, 133, 133), #464646, #121212);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #ccc;
+            max-width: 700px;
+            line-height: 1.6;
+            margin: 0 auto 3rem;
+        }
+
+        .contact-section {
+            width: 90%;
+            max-width: 1000px;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #fff;
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .contact-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(45deg, #075E54, #128C7E);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .contact-card p {
+            color: #dedde5;
+            margin-bottom: 1.5rem;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .whatsapp-btn i {
+            margin-right: 8px;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            max-width: 700px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .instructions ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructions li {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .instructions p.note {
+            background: rgba(18, 140, 126, 0.1);
+            border-left: 4px solid #25D366;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+        }
+
+        footer {
+            width: 100%;
+            background: rgba(10, 10, 10, 0.8);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .footer-column p, .footer-column a {
+            color: #aaa;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #f5f5f7;
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            
+            .top ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(15, 15, 15, 0.95);
+                backdrop-filter: blur(20px);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 1.5rem 0;
+                gap: 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+            
+            .top ul.active {
+                display: flex;
+            }
+            
+            .top ul li {
+                text-align: center;
+                margin: 0.8rem 0;
+            }
+            
+            .top ul li a {
+                font-size: 1.1rem;
+                padding: 12px 0;
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .contact-section h2 {
+                font-size: 2rem;
+            }
+            
+            .contact-card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-bg">
+        <div class="top">
+            <a href="#" class="logo">nano<span class="logo-dot">.</span></a>
+            <ul id="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-icon" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <section class="hero">
+            <h1>Contact Nano</h1>
+            <p>Get in touch with our CEO directly through WhatsApp</p>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2>Message Yahia Ben Amor</h2>
+            
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-img">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Yahia Ben Amor</h3>
+                    <p>CEO & Founder</p>
+                    <a href="https://wa.me/21612345678?text=Hello%20Yahia%20Ben%20Amor%2C%20I%20would%20like%20to%20know%20more%20about%20Nano%20Innovative" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                    </a>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>How to Contact</h3>
+                <ol>
+                    <li>Click the "Message on WhatsApp" button above</li>
+                    <li>This will open WhatsApp with a pre-written message (you can edit it if you wish)</li>
+                    <li>Press send to start a conversation with Yahia Ben Amor</li>
+                    <li>If you don't have WhatsApp installed, you'll be prompted to install it</li>
+                </ol>
+                <p class="note">Note: Make sure you have WhatsApp installed on your device. If the button doesn't work, you can manually add the number +216 12 345 678 to your contacts and message him directly.</p>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Nano</h3>
+                    <p>
+                        Transforming businesses through innovative technology solutions
+                        and expert guidance.
+                    </p>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <a href="mailto:nanoinnovative615@gmail.com">nanoinnovative615@gmail.com</a>
+                    <a href="https://maps.app.goo.gl/d2kw9BhRawCAE7iEA">5090 Bekalta, Monastir</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Other Channels</h3>
+                    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                </div>
+            </div>
+            <div class="copyright">&copy; 2025 Tous les droits sont réservés | Nano Innovative</div>
+        </footer>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        }
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-links').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Contact Form</title>
+<style>
+  /* --- Base Styles --- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    padding: 20px;
+  }
+
+  /* --- Form Container --- */
+  #form {
+    background: #111;
+    padding: 50px 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+  }
+
+  /* Subtle animated border effect */
+  #form::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #f0f0f0, #888, #f0f0f0);
+    z-index: -1;
+    animation: borderAnimation 3s linear infinite;
+    opacity: 0.15;
+    border-radius: 18px;
+  }
+
+  @keyframes borderAnimation {
+    0% { opacity: 0.1; }
+    50% { opacity: 0.2; }
+    100% { opacity: 0.1; }
+  }
+
+  /* Form header */
+  .form-header {
+    text-align: center;
+    margin-bottom: 35px;
+  }
+
+  .form-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: #f0f0f0;
+  }
+
+  .form-header p {
+    font-size: 14px;
+    color: #888;
+    font-weight: 400;
+  }
+
+  /* --- Form Fields --- */
+  .field {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .field input, .field textarea {
+    width: 100%;
+    padding: 16px 18px;
+    font-size: 15px;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    background: #0a0a0a;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    resize: none;
+  }
+
+  .field textarea {
+    min-height: 120px;
+    padding-top: 20px;
+  }
+
+  .field input:focus, .field textarea:focus {
+    border-color: #c0c0c0;
+    box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.15);
+  }
+
+  .field label {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 15px;
+    pointer-events: none;
+    transition: 0.25s ease;
+    background: #111;
+    padding: 0 6px;
+  }
+
+  .field textarea + label {
+    top: 25px;
+    transform: none;
+  }
+
+  .field input:focus + label,
+  .field input:not(:placeholder-shown) + label,
+  .field textarea:focus + label,
+  .field textarea:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 13px;
+    color: #c0c0c0;
+  }
+
+  /* Character counter */
+  .char-counter {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    font-size: 12px;
+    color: #666;
+    background: #0a0a0a;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* --- Glass Submit Button --- */
+  input[type="submit"] {
+    width: 100%;
+    padding: 16px;
+    font-size: 15px;
+    background: rgba(15, 15, 15, 0.7);
+    color: #f0f0f0;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  input[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transition: 0.5s;
+  }
+
+  input[type="submit"]:hover::before {
+    left: 100%;
+  }
+
+  input[type="submit"]:hover {
+    background: rgba(25, 25, 25, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 5px 15px rgba(0, 0, 0, 0.3),
+      0 0 15px rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+  }
+
+  input[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      0 0 8px rgba(255, 255, 255, 0.03);
+  }
+
+  /* Button loading animation */
+  @keyframes buttonLoad {
+    0% { opacity: 0.7; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.7; }
+  }
+
+  .loading {
+    animation: buttonLoad 1.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* --- Alert Box --- */
+  .alert {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    background: #1a1a1a;
+    color: #f0f0f0;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: 500;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+    max-width: 320px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- Form Footer --- */
+  .form-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    border-top: 1px solid #222;
+    padding-top: 20px;
+  }
+
+  /* --- Responsive Adjustments --- */
+  @media (max-width: 520px) {
+    #form {
+      padding: 35px 25px;
+    }
+    
+    .form-header h2 {
+      font-size: 24px;
+    }
+    
+    .field textarea {
+      min-height: 100px;
+    }
+  }
+  .logo-dot {
+            color: #aaa;
+            margin-left: 2px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: center;
+            align-items: center;
+        }
+</style>
+</head>
+<body>
+
+<form id="form">
+  <div class="form-header">
+    <h3><h3 class="logo">nano<span class="logo-dot">.</span></h3>
+    <p>Give us a feedback</p>
+  </div>
+
+  <div class="field">
+    <input type="text" name="name" id="name" placeholder=" " required>
+    <label for="name">Full Name</label>
+  </div>
+
+  <div class="field">
+    <input type="email" name="email" id="email" placeholder=" " required>
+    <label for="email">Email Address</label>
+  </div>
+
+  <div class="field">
+    <textarea name="message" id="message" placeholder=" " required maxlength="500"></textarea>
+    <label for="message">Your Message</label>
+    <div class="char-counter"><span id="char-count">0</span>/500</div>
+  </div>
+
+  <input type="submit" id="button" value="Send Message">
+  
+  <div class="form-footer">
+    © 2025 Company Name • All rights reserved
+  </div>
+</form>
+
+<div class="alert" id="alert">Message sent successfully!</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init('53r22IZqcQ-0GB9gT');
+
+  const form = document.getElementById('form');
+  const btn = document.getElementById('button');
+  const alertBox = document.getElementById('alert');
+  const messageField = document.getElementById('message');
+  const charCount = document.getElementById('char-count');
+
+  // Character counter for message field
+  messageField.addEventListener('input', function() {
+    charCount.textContent = this.value.length;
+  });
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const originalText = btn.value;
+    btn.value = 'Sending...';
+    btn.disabled = true;
+    btn.classList.add('loading');
+
+    emailjs.sendForm('service_ejygvk6', 'template_rd7ztzo', this)
+      .then(() => {
+        btn.value = originalText;
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        showAlert('Message sent successfully!');
+        form.reset();
+        charCount.textContent = '0';
+      }, (err) => {
+        btn.value = originalText;
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        showAlert('Failed to send message. Please try again.');
+        console.error(err);
+      });
+  });
+
+  function showAlert(message) {
+    alertBox.textContent = message;
+    alertBox.style.display = 'block';
+    setTimeout(() => {
+      alertBox.style.display = 'none';
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
