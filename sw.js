@@ -1,20 +1,23 @@
+const CACHE_NAME = "nano-cache-v1";
+const OFFLINE_URL = "nano offline.html";
+
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open("nano-cache").then(cache => {
+    caches.open(CACHE_NAME).then(cache => {
       return cache.addAll([
-        "/",
-        "/nano offline.html"
+        OFFLINE_URL
       ]);
     })
   );
+  self.skipWaiting();
 });
 
 self.addEventListener("fetch", event => {
-  event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request).then(response => {
-        return response || caches.match("/nano offline.html");
-      });
-    })
-  );
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return caches.match(OFFLINE_URL);
+      })
+    );
+  }
 });
